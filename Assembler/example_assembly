@@ -1,10 +1,11 @@
 #this file is an example of JZ-101 assembly code 
 #for demostration purposus
 #all this code does is print out hello world
+NOP ,,
 JMP ,0,0,@MAIN #This simply jumps over all methods to the main method
 @Print #This example method will take a null terminated string and 
 #print it to terminal asuming that one uses the JZ-101 with the JC-64
-LDA ,R1,SP,1 #Loads the address to the string from the stack into R1
+LDA ,SP,R1,1 #Loads the address to the string from the stack into R1
 INC ,R0,R2,.TERM_ADDR #load the location of teminal into R2
 #As there is no load immidate instruction INC from R0 will act as load immidate
 @Print_top #Top of the main loop of the Print function
@@ -17,8 +18,8 @@ JMP ,0,0,@Print_top #Jump back to loop top
 @Print_end
 RTN ,, #Print end simply returns the calling method
 @MAIN
-INC ,R0,SP,0xFFF0 #INIT the stack to high
-INC ,R1,R0,.HELLO_WORLD #Load in the address of hello world vector
+INC ,R0,SP,0xFFEF #INIT the stack to high
+INC ,R0,R1,.HELLO_WORLD #Load in the address of hello world vector
 DEC ,SP,SP,1 #Move the stack up one
 STR ,R1,SP,1 #Store the pointer of Hello_Word to point 1 of stack
 CAL ,0,0,@Print #Call the print method and print hello word

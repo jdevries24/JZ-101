@@ -1,4 +1,24 @@
-Note that this comp still reads c_ish. see mk1comp readme for details
+Prerequisites
+You will need pycparser installed in order to use this compiler. https://github.com/eliben/pycparser
+
+Use:
+To use simply run the python script front_end.py and input the name of a c file sans file exception. Then the compiler will compile 
+to assembly and spit out Program.s for the assembly code, Program.d is a secondary output of the assembly process. Finally Program.h
+is the executable to be loaded to the Logisim circuit. If you wish to assemble assembly code insted simply run the backend.py file.
+
+Notes:
+While in theory this compiler processes c code in reality it compiles c ish. First off the compiler generates c code
+Directly from the abstract syntax tree. This means that there is no type checking or other syntax analysis. Additionally 
+the code will be horrifically inefficient. STR ,SP,1,0 - LDA ,SP,1,0 - INC SP,SP,0 is not a abnormal output.
+Additionally unary operations will be odd. p++ and p-- are implemended but not --p and ++p. &x will return addresses so 
+yay! *x is the odd one out though. there is no such thing as a pointer declaration in c ish. *(expr) means save or load
+to the address calculated by this expression.Note to pass global arrays passing the address is needed not "Print(message)" 
+but Print(&message)
+
+Not implemented:
+-no type checking
+-no pointer decleraton to load and store to a pointer * operator will allways need to be used
+
 Update Log
 -Improved frontend to improve readability.
 -Improved Backend/assembler so that it is less of a mess and improved redility.

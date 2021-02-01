@@ -4,6 +4,11 @@ pycparser is under the BSD license
 JZ-101 J-64 designs are open use 
 JZ-101 compiler is also open use
 
+_Prerequisites_
+to run the microprocessor Logisim. http://www.cburch.com/logisim/
+to run the assembler/complier python3.
+to run the compiler pycparser. https://github.com/eliben/pycparser
+
 _intro_
 this is the J-64 computer. It is a computer that is designed in the logisim logic simulator although a Verilog 
 implementation is on the horizon. The core of this computer is the JZ-101 microprocessor. Included in this directory

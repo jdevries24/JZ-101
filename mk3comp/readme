@@ -1,0 +1,7 @@
+Update Log
+-Improved frontend to improve readability.
+-Improved Backend/assembler so that it is less of a mess.
+-Changed how the Middle ends symbol table works from class to standerd array.
+-Allow the register keyword for storing vars to a register rather then stack
+-Improved documentation for all interfaces
+

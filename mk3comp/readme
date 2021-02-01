@@ -1,10 +1,12 @@
 Prerequisites
-You will need pycparser installed in order to use this compiler. https://github.com/eliben/pycparser
+You will need pycparser installed in order to use the front and middle end. https://github.com/eliben/pycparser
+the assembler requires no prerequisits.
 
 Use:
 To use simply run the python script front_end.py and input the name of a c file sans file exception. Then the compiler will compile 
 to assembly and spit out Program.s for the assembly code, Program.d is a secondary output of the assembly process. Finally Program.h
-is the executable to be loaded to the Logisim circuit. If you wish to assemble assembly code insted simply run the backend.py file.
+is the executable to be loaded to the Logisim circuit. 
+If you wish to assemble assembly code insted simply run the backend.py file. this will assemble a .h and .d file from a .s file
 
 Notes:
 While in theory this compiler processes c code in reality it compiles c ish. First off the compiler generates c code
@@ -33,5 +35,5 @@ Todo
 -Change how storeing and loading is used. Next update the symbol table will store the C_ast 
 decleration node insted of all the data in a list.
 -Add module in backend for light optomization of the C code to remove dead and redundent code no more "DEC,SP,SP,03 INC,SP,SP,03".
--Update the JZ-101 into the JZ-102 need a debug mode inturupt circuitry and jumping/branching needs to be done by address offset not raw address
+-Update the JZ-101 into the JZ-102. need a debug mode inturupt circuitry and jumping/branching needs to be done by address offset not raw address
 -Will take break will start work on new JZ on the 8th of febuary. 

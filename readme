@@ -1,7 +1,20 @@
-Overview
-This Architecture is a Risc inspired architecture. Rather then lots of instructions that execute slowly
-this Processes has a few instructions that execute quickly. Average clock cycles per instruction is three.
-The register is entirely 16bit. 16bit words that are word addressable,16bit addresses and 16 bit instructions.
+_license_
+Logisim is under the GNU license
+pycparser is under the BSD license 
+JZ-101 J-64 designs are open use 
+JZ-101 compiler is also open use
+
+_intro_
+this is the J-64 computer. It is a computer that is designed in the logisim logic simulator although a Verilog 
+implementation is on the horizon. The core of this computer is the JZ-101 microprocessor. Included in this directory
+is the logisim file for the J-64 computer the JZ-101 processor and a assembler and compiler for the JZ-101
+
+_JZ-101_ 
+the JZ-101 microprocessor is a risc inspired microprocessor. Rather then lots of instructions that execute slowly
+this Processes has a few instructions that execute quickly. Average of three cycles per instruction. not bad for a architecture 
+with no pipeline. Additionally this is a load store architecture. Instead of meany addressing modes
+this processer only has two instructions for loading and storing to memory. Load value to register from memory and store value from register
+to memory.The processor is entirely 16bit. 16bit words that are word addressable,16bit addresses and 16 bit instructions.
 
 Regesters:
 the processor has 16 registers available to the programer R0 thought RF, 13 Registers (R1 -RC) are general purpose and can
@@ -28,8 +41,14 @@ the source register is 4
 the destination register is 1
 the operand is 0009
 
+_J-64_
+At the moment the computer is just the JZ-101 CPU, memory keyboard,terminal,and a I0 controller.
+IO is provided by a keyboard and a terminal. The keyboard buffer is at address 0xFFFE.
+To read the buffer read at this address to clear the last char write to that address.
+The TTY is at address 0xFFFF write a char to here to type on the TTY. A "Disc Drive",Memory management
+unit and an interrupt controller are coming soon. 
 
-Instructions
+_Instructions_
 
 NAME: No Op
 MEM: NOP

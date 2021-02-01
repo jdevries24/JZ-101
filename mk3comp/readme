@@ -1,7 +1,13 @@
+Note that this comp still reads c_ish. see mk1comp readme for details
 Update Log
 -Improved frontend to improve readability.
 -Improved Backend/assembler so that it is less of a mess.
 -Changed how the Middle ends symbol table works from class to standerd array.
 -Allow the register keyword for storing vars to a register rather then stack
 -Improved documentation for all interfaces
+
+ToDo
+-Change how storeing and loading is used. Next update the symbol table will store the C_ast decleration node insted of all the data in a 
+list
+-Add module in backend for light optomization of the C code to remove dead and redundent code no more DEC,SP,SP,03 INC,SP,SP,03
 

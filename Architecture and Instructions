@@ -1,0 +1,181 @@
+Overview
+This Architecture is a Risc inspired architecture. Rather then lots of instructions that execute slowly
+this Processes has a few instructions that execute quickly. Average clock cycles per instruction is three.
+The register is entirely 16bit. 16bit words that are word addressable,16bit addresses and 16 bit instructions.
+
+Regesters:
+the processor has 16 registers available to the programer R0 thought RF, 13 Registers (R1 -RC) are general purpose and can
+be used for storing addresses, values,chesses what have you. Register R0 is hardwired to zero for a zero constant. 
+Register RE also SP is the stack pointer. This register is special because the call and return instruction use the address
+in this register for loading/storing the return address. Register RF or FR, is the flag register. this register is clobbered for 
+Most Arithmetic instructions. 
+
+Instruction format
+|FEDCBA98|7654|3210| |FEBCBA9876543210|
+ OPcode   SRC  Dest        Oprand
+ 
+For each Instruction bits F-8 is the op code, The register number for the source
+register are bits 7-4,The register number for the destination are bits 3-0.
+If the instruction takes an operand such as a offset or address or ammount
+That value is stored in the next word. 
+
+example
+|A0|4|1|,|0009|
+|op|s|d|,|Oprn|
+
+opcode is Load
+the source register is 4
+the destination register is 1
+the operand is 0009
+
+
+Instructions
+
+NAME: No Op
+MEM: NOP
+PERMS: None
+OPCODE: 00
+Description: Does nothing but move onto the next Instruction
+
+NAME: Load
+MEM: LDA
+PERMS: ,Source,Dest,Offset
+OPCODE: A0
+Description: Takes the value at the address of the Source register and
+Moves that Value into the Destination register +- the offset
+
+NAME: Store
+MEM: STR
+PERMS: ,Source,Dest,Offset
+OPCODE: B0
+Description: Takes the value OF the Source register and stores it to the
+memory address of the Destination Register +- the offset
+
+NAME: Move
+MEM: MOV
+PERMS: ,Source,Dest
+OPCODE: C0
+Description: Takes the value of the Source register and stores it to the Destination register
+
+NAME: Increment
+MEM: INC
+PERMS: ,Source,Dest,Amount
+OPCODE: 37
+Description: Takes the value of the Source register then adds the amount then store the result in the Dest register
+
+NAME: Decrement:
+MEM: DEC
+PERMS: ,Source,Dest,Amount
+OPCODE: 38
+Description Takes the value of the Source register then subtracts the amount then stores the result in the Dest register
+
+NAME:Add
+MEM: ADD
+PERMS: ,Source,Dest
+OPCODE: 30
+Description: Takes the value of the Source register then adds it to the Dest register value then stores it to the Dest register
+
+NAME:Subtract
+MEM: SUB
+PERMS: ,Source,Dest
+OPCODE: 31
+Description: Takes the value of the Dest register then subtracts it from the Source register value then stores it to the Dest register
+
+NAME:Or
+MEM: ORR
+PERMS: ,Source,Dest
+OPCODE: 35
+Description: Takes the value of the Source register then binary Ors it with the Dest register value then stores it to the Dest register
+
+NAME:And
+MEM: AND
+PERMS: ,Source,Dest
+OPCODE: 34
+Description: Takes the value of the Source register then binary Ands it with the Dest register value then stores it to the Dest register
+
+NAME: Exclusive Or
+MEM: XOR
+PERMS: ,Source,Dest
+OPCODE: 36
+Description: Takes the value of the Source register then binary Ands it with the Dest register value then stores it to the Dest register
+
+NAME: Logical shift left
+MEM: LSL
+PERMS: ,Source,Dest
+OPCODE: 32
+Description: takes the value of the Source register then binary
+shifts it one to the left and stores it to the Dest register
+
+NAME: Logical shift Right
+MEM: LSR
+PERMS: ,Source,Dest
+OPCODE: 33
+Description: takes the value of the Source register then Binary shifts
+it one to the left then stores it tho the Dest register
+
+NAME: Compare
+MEM: CMP
+PERMS: ,Source,Dest
+OPCODE: 3F
+Description: Takes the value of the Source register then compares it with the Dest register value then stores the flag field in the Flags register
+
+NAME: Jump
+MEM: JMP
+PERMS: ,0,0,Address
+OPCODE: 45
+Description: Takes the value of address and stores it to the PC
+
+NAME: Call
+MEM: CAL
+PERMS ,0,0,Address
+OPCODE: 55
+Description: Takes the address of the next instruction and stores it to the
+memory location stored in the SP then stores the Address to the PC
+
+NAME: Return
+MEM: RTN
+PERMS: None
+OPCODE: 65
+Description: Takes the value stored at the address in the SP and stores it to the PC
+
+NAME: Jump if zero
+MEM: JMZ
+PERMS: 0,0,address
+OPCODE: 40
+Description: Stores the address to the PC if the zero flag is set otherwise it
+loads the next instruction to the PC
+
+NAME: Jump if equal
+MEM: JME
+PERMS: 0,0,address
+OPCODE: 43
+Description: Stores the address to the PC if the equal flag is set otherwise it
+loads the next instruction to the PC
+
+NAME: Jump if less then
+MEM: JML
+PERMS: 0,0,address
+OPCODE: 42
+Description: Stores the address to the PC if the less then flag is set
+otherwise it loads the next instruction to the PC
+
+NAME: Jump if Greater than
+MEM: JMG
+PERMS: 0,0,address
+OPCODE: 44
+Description: Stores the address to the PC if the greater than flag
+is set otherwise it loads the next instruction to the PC
+
+NAME: Jump if Carry
+MEM: JMC
+PERMS: ,,address
+OPCODE: 41
+Description: Stores the address to the PC if the Carry 
+flag is set otherwise it loads the next instruction to the PC
+
+Name: Halt and Catch Fire
+MEM: HCF
+PERMS: None
+OPCODE: FF
+Description: Halts the processor permanently only way to restart is
+to power down processor

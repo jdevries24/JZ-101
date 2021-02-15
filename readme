@@ -1,3 +1,11 @@
+_update_
+-JZ-102 Micro processor Has a redesigned control unit and PC select Unit.
+-Jumping and Call instructions now move to a point offset and not to a set address.
+-Complierer/Assembler has been modified to reflect this change. 
+-Control Unit Modified to allow a debug mode and interrupts
+-Microcode is now one very long word with individual bits controlling processor control. 
+
+
 _license_
 Logisim is under the GNU license
 pycparser is under the BSD license 
@@ -145,16 +153,16 @@ Description: Takes the value of the Source register then compares it with the De
 
 NAME: Jump
 MEM: JMP
-PERMS: ,0,0,Address
+PERMS: ,0,0,offset
 OPCODE: 45
-Description: Takes the value of address and stores it to the PC
+Description: Takes the value of offset and branches the PC by it. 
 
 NAME: Call
 MEM: CAL
-PERMS ,0,0,Address
+PERMS ,0,0,offset
 OPCODE: 55
 Description: Takes the address of the next instruction and stores it to the
-memory location stored in the SP then stores the Address to the PC
+memory location stored in the SP then branches the PC by offset
 
 NAME: Return
 MEM: RTN
@@ -164,38 +172,63 @@ Description: Takes the value stored at the address in the SP and stores it to th
 
 NAME: Jump if zero
 MEM: JMZ
-PERMS: 0,0,address
+PERMS: 0,0,offset
 OPCODE: 40
-Description: Stores the address to the PC if the zero flag is set otherwise it
+Description: Branches the PC by offset if the zero flag is set otherwise it
 loads the next instruction to the PC
 
 NAME: Jump if equal
 MEM: JME
-PERMS: 0,0,address
+PERMS: 0,0,offset
 OPCODE: 43
-Description: Stores the address to the PC if the equal flag is set otherwise it
+Description: Branches the PC by offset if the equal flag is set otherwise it
 loads the next instruction to the PC
 
 NAME: Jump if less then
 MEM: JML
-PERMS: 0,0,address
+PERMS: 0,0,offset
 OPCODE: 42
-Description: Stores the address to the PC if the less then flag is set
+Description: Branches the PC by offset to the PC if the less then flag is set
 otherwise it loads the next instruction to the PC
 
 NAME: Jump if Greater than
 MEM: JMG
-PERMS: 0,0,address
+PERMS: 0,0,offset
 OPCODE: 44
-Description: Stores the address to the PC if the greater than flag
+Description: Branches the PC by offset if the greater than flag
 is set otherwise it loads the next instruction to the PC
 
 NAME: Jump if Carry
 MEM: JMC
-PERMS: ,,address
+PERMS: ,,offset
 OPCODE: 41
-Description: Stores the address to the PC if the Carry 
+Description: Branches the PC by offset if the Carry 
 flag is set otherwise it loads the next instruction to the PC
+
+NAME: Call Inturput
+MEM: CIN
+PERMS: none
+OPCODE: EE
+Description: Called when inturupt is raised. Saves Current PC to SP - 1.
+Then Jumps to the ISR address at 0x0003
+
+NAME: Return Inturupt
+MEM: RIN
+PERMS: None
+OPCODE: E0
+Description: Returns to address at SP - 1.
+
+Name: Halt and Debug
+MEM: HAD
+PERMS: none
+OPCODE: E1
+Description: Halts the processor and puts it into Debug mode
+
+Name Halt until Inturupt
+MEM: HTI
+PERMS: none
+OPCODE: E2
+Description: Halts the processor untill a inturupt signal is generated
 
 Name: Halt and Catch Fire
 MEM: HCF
